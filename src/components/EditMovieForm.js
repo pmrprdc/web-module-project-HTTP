@@ -5,15 +5,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
- 
+ // #### GET `http://localhost:9000/api/movies/:id`
+
+/// - Retrieves a movie with the passed value as id.
+
 
 
 
 const EditMovieForm = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const { setMovies } = props;
+
   const [movie, setMovie] = useState({
     title: "",
     director: "",
@@ -21,6 +24,25 @@ const EditMovieForm = (props) => {
     metascore: 0,
     description: ""
   });
+
+  useEffect(() => {
+    // Use Axios to make a GET request
+    axios.get(`http://localhost:9000/api/movies/${id}`)
+      .then(response => {
+        // Handle the successful response, update the 'movie' state
+        setMovie(response.data)
+      })
+      .catch(error => {
+        // Handle errors
+        console.error(error);
+      });
+  }, []); // The dependency array specifies when this effect should run
+
+
+  
+
+
+
 
   const handleChange = (e) => {
     setMovie({
@@ -40,7 +62,7 @@ const EditMovieForm = (props) => {
       .catch(err => {
         console.log(err);
       })
-  }
+    }
 
   const { title, director, genre, metascore, description } = movie;
 
