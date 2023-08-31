@@ -16,6 +16,7 @@ const EditMovieForm = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setMovies } = props;
+  console.log(setMovies)
 
   const [movie, setMovie] = useState({
     title: "",
