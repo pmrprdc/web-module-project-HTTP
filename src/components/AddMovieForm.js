@@ -12,11 +12,13 @@ import axios from 'axios';
 
 
 
-const EditMovieForm = (props) => {
+const AddMovieForm = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { setMovies } = props;
-  
+  const { setMovies, movies } = props;
+
+
+
 
   const [movie, setMovie] = useState({
     title: "",
@@ -26,43 +28,30 @@ const EditMovieForm = (props) => {
     description: ""
   });
 
-  useEffect(() => {
-    // Use Axios to make a GET request
-    axios.get(`http://localhost:9000/api/movies/${id}`)
-      .then(response => {
-        // Handle the successful response, update the 'movie' state
-        setMovie(response.data)
-      })
-      .catch(error => {
-        // Handle errors
-        console.error(error);
-      });
-  }, []); // The dependency array specifies when this effect should run
-
-
-  
-
-
-
+ 
 
   const handleChange = (e) => {
     setMovie({
       ...movie,
       [e.target.name]: e.target.value
     });
+  
   }
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:9000/api/movies/${id}`, movie)
+    axios.post(`http://localhost:9000/api/movies`, movie)
       .then(res => {
-        setMovies(res.data);
-        navigate(`/movies/${movie.id}`);
+       setMovies([
+        ...movies, movie
+       ])
+        navigate(`/`);
       })
       .catch(err => {
         console.log(err);
       })
+      
     }
 
   const { title, director, genre, metascore, description } = movie;
@@ -106,4 +95,4 @@ const EditMovieForm = (props) => {
     </div>);
 }
 
-export default EditMovieForm;
+export default AddMovieForm;

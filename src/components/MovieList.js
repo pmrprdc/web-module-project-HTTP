@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import MovieListItem from './MovieListItem';
 import MovieFooter from './MovieFooter';
 import FavoriteMovieList from './FavoriteMovieList';
