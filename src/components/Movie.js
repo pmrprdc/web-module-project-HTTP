@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
 
 const Movie = (props) => {
-  const { addToFavorites } = props;
+  const { addToFavorites, deleteMovie } = props;
 
   const [movie, setMovie] = useState('');
 
@@ -26,6 +25,7 @@ const Movie = (props) => {
     axios.delete(`http://localhost:9000/api/movies/${id}`)
     .then(response => {
       console.log(response.data)
+      deleteMovie(id)
       navigate("/movies")
     })
     .catch(error => {
